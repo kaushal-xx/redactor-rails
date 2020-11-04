@@ -1,5 +1,5 @@
 class RedactorRails::DocumentsController < ApplicationController
-  before_filter :redactor_authenticate_user!
+  before_action :redactor_authenticate_user!
 
   def index
     @documents = RedactorRails.document_model.where(
@@ -18,7 +18,7 @@ class RedactorRails::DocumentsController < ApplicationController
     end
 
     if @document.save
-      render :text => { :filelink => @document.url, :filename => @document.filename }.to_json
+      render json: { filelink: @document.url,filename: @document.filename }
     else
       render json: { error: @document.errors }
     end
